@@ -2,3 +2,4 @@
 - [Getting Started](getting-started.md)
 - [Architecture](architecture.md)
 - [Commands](commands.md)
+- [Observability](observability.md)
