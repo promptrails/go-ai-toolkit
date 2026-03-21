@@ -28,11 +28,7 @@ func Load() (*Config, error) {
 	}
 
 	if cfg.DataDir == "" {
-		home, err := os.UserHomeDir()
-		if err != nil {
-			return nil, fmt.Errorf("failed to get home directory: %w", err)
-		}
-		cfg.DataDir = filepath.Join(home, ".ai-chat")
+		cfg.DataDir = ".ai-chat"
 	}
 
 	if err := os.MkdirAll(cfg.DataDir, 0o755); err != nil {

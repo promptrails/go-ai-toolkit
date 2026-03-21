@@ -1,5 +1,6 @@
 ai-chat
 .env
+.ai-chat/
 dist/
 *.exe
 *.test
