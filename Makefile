@@ -1,4 +1,4 @@
-.PHONY: build run clean
+.PHONY: build run clean install fmt vet lint
 
 ## Build the binary
 build:
@@ -7,6 +7,18 @@ build:
 ## Run the app
 run: build
 	./ai-chat
+
+## Format code
+fmt:
+	gofmt -w .
+
+## Run go vet
+vet:
+	go vet ./...
+
+## Run linters
+lint:
+	golangci-lint run ./...
 
 ## Clean build artifacts
 clean:
