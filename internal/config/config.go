@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/caarlos0/env/v11"
+	"github.com/joho/godotenv"
 )
 
 // Config holds the application configuration from environment variables.
@@ -16,8 +17,11 @@ type Config struct {
 	DataDir string `env:"AI_DATA_DIR"`
 }
 
-// Load reads configuration from environment variables.
+// Load reads configuration from .env file (if present) and environment variables.
 func Load() (*Config, error) {
+	// Load .env file if it exists (silently ignore if missing)
+	_ = godotenv.Load()
+
 	cfg := &Config{}
 	if err := env.Parse(cfg); err != nil {
 		return nil, fmt.Errorf("missing config: %w", err)
