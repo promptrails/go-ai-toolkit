@@ -11,6 +11,7 @@ Three packages. One toolkit. Everything you need to build AI-powered application
 | [**LangRails**](https://github.com/promptrails/langrails) | Unified LLM provider — 12 providers, streaming, tool calling, chain, graph, MCP, A2A | [![Go](https://img.shields.io/github/v/tag/promptrails/langrails)](https://github.com/promptrails/langrails) |
 | [**GuardRails**](https://github.com/promptrails/guardrails) | Content safety — PII, toxicity, prompt injection, secrets, sentiment, 14 scanners | [![Go](https://img.shields.io/github/v/tag/promptrails/guardrails)](https://github.com/promptrails/guardrails) |
 | [**MemoryRails**](https://github.com/promptrails/memoryrails) | Agent memory — embeddings, vector stores, semantic search, importance decay | [![Go](https://img.shields.io/github/v/tag/promptrails/memoryrails)](https://github.com/promptrails/memoryrails) |
+| [**MediaRails**](https://github.com/promptrails/mediarails) | AI media generation — speech, image, video, 10 providers | [![Go](https://img.shields.io/github/v/tag/promptrails/mediarails)](https://github.com/promptrails/mediarails) |
 
 ## Demo: AI Chat TUI
 
@@ -130,6 +131,7 @@ memory.Remember(ctx, input.Content, memoryrails.TypeConversation, nil)
 | LangRails | [promptrails.github.io/langrails](https://promptrails.github.io/langrails) | [pkg.go.dev](https://pkg.go.dev/github.com/promptrails/langrails) |
 | GuardRails | [promptrails.github.io/guardrails](https://promptrails.github.io/guardrails) | [pkg.go.dev](https://pkg.go.dev/github.com/promptrails/guardrails) |
 | MemoryRails | [promptrails.github.io/memoryrails](https://promptrails.github.io/memoryrails) | [pkg.go.dev](https://pkg.go.dev/github.com/promptrails/memoryrails) |
+| MediaRails | [promptrails.github.io/mediarails](https://promptrails.github.io/mediarails) | [pkg.go.dev](https://pkg.go.dev/github.com/promptrails/mediarails) |
 
 ## License
 
