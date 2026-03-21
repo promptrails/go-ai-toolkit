@@ -2,11 +2,17 @@
 
 ## Install
 
+**Via Go:**
+
 ```bash
 go install github.com/promptrails/go-ai-toolkit/cmd/chat@latest
 ```
 
-Or build from source:
+**Via GitHub Release:**
+
+Download the latest binary from [Releases](https://github.com/promptrails/go-ai-toolkit/releases).
+
+**From source:**
 
 ```bash
 git clone https://github.com/promptrails/go-ai-toolkit

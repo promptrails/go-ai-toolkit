@@ -56,20 +56,29 @@ User Input
 
 ### Try It
 
-```bash
-# Install
-go install github.com/promptrails/go-ai-toolkit/cmd/chat@latest
+**Via Go:**
 
-# Run
+```bash
+go install github.com/promptrails/go-ai-toolkit/cmd/chat@latest
 export OPENAI_API_KEY=sk-...
 ai-chat
 ```
 
-Or build from source:
+**Via GitHub Release:**
+
+Download the latest binary from [Releases](https://github.com/promptrails/go-ai-toolkit/releases), extract, and run:
+
+```bash
+export OPENAI_API_KEY=sk-...
+./ai-chat
+```
+
+**From source:**
 
 ```bash
 git clone https://github.com/promptrails/go-ai-toolkit
 cd go-ai-toolkit
+cp .env.example .env  # edit with your API key
 make run
 ```
 

@@ -17,13 +17,5 @@ archives:
   - format: tar.gz
     name_template: "ai-chat_{{ .Os }}_{{ .Arch }}"
 
-brews:
-  - name: ai-chat
-    repository:
-      owner: promptrails
-      name: homebrew-tap
-    homepage: https://github.com/promptrails/go-ai-toolkit
-    description: AI chat TUI powered by Go AI Toolkit (LangRails + GuardRails + MemoryRails)
-
 changelog:
   sort: asc

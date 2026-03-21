@@ -1,3 +1,5 @@
+// Package tui provides the terminal user interface for the AI chat application.
+// It uses Bubbletea for rendering and depends only on the engine.Engine interface.
 package tui
 
 import (
@@ -5,6 +7,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/charmbracelet/bubbles/spinner"
 	"github.com/charmbracelet/bubbles/textarea"
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
@@ -36,6 +39,7 @@ type Model struct {
 	engine   engine.Engine
 	viewport viewport.Model
 	textarea textarea.Model
+	spinner  spinner.Model
 	messages []string
 	width    int
 	height   int
@@ -53,10 +57,15 @@ func New(eng engine.Engine) Model {
 
 	vp := viewport.New(80, 20)
 
+	sp := spinner.New()
+	sp.Spinner = spinner.Dot
+	sp.Style = lipgloss.NewStyle().Foreground(lipgloss.Color("4"))
+
 	return Model{
 		engine:   eng,
 		viewport: vp,
 		textarea: ta,
+		spinner:  sp,
 	}
 }
 
@@ -101,9 +110,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.addMessage(userStyle.Render("you"), input)
 			m.viewport.GotoBottom()
 
-			// Send to engine
+			// Send to engine with spinner
 			m.waiting = true
-			return m, m.sendMessage(input)
+			return m, tea.Batch(m.sendMessage(input), m.spinner.Tick)
 		}
 
 	case responseMsg:
@@ -114,6 +123,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.addMessage(assistantStyle.Render("ai"), msg.content)
 		}
 		m.viewport.GotoBottom()
+
+	case spinner.TickMsg:
+		if m.waiting {
+			var cmd tea.Cmd
+			m.spinner, cmd = m.spinner.Update(msg)
+			cmds = append(cmds, cmd)
+		}
 
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
@@ -139,7 +155,7 @@ func (m Model) View() string {
 		dimStyle.Render(fmt.Sprintf(" model:%s", m.engine.Model()))
 
 	if m.waiting {
-		title += dimStyle.Render(" (thinking...)")
+		title += " " + m.spinner.View() + dimStyle.Render(" thinking...")
 	}
 
 	separator := dimStyle.Render(strings.Repeat("─", max(m.width, 40)))
