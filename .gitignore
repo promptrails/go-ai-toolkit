@@ -1,6 +1,8 @@
 ai-chat
 .env
 .ai-chat/
+demo.tape
+demo.gif
 dist/
 *.exe
 *.test

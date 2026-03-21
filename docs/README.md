@@ -14,6 +14,8 @@ Three packages. One toolkit. A working demo.
 
 ## Demo App
 
+![AI Chat TUI Demo](demo.gif)
+
 This repo includes a terminal chat application that demonstrates all three packages working together. See [Getting Started](getting-started.md) to try it.
 
 ## Quick Links

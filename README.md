@@ -16,27 +16,7 @@ Three packages. One toolkit. Everything you need to build AI-powered application
 
 This repo includes a terminal chat application that demonstrates all three packages working together.
 
-```
-┌─ AI Chat  model:gpt-4o-mini ─────────────────────┐
-│                                                    │
-│  you: What's the capital of Turkey?                │
-│                                                    │
-│  ai: The capital of Turkey is Ankara.              │
-│                                                    │
-│  you: Remember that I'm learning Turkish           │
-│                                                    │
-│  ai: Got it! I'll keep that in mind.               │
-│                                                    │
-│  you: /memory                                      │
-│                                                    │
-│  system: Recent memories:                          │
-│    1. [conversation] What's the capital of Turkey?  │
-│    2. [conversation] Remember that I'm learning... │
-│                                                    │
-├────────────────────────────────────────────────────┤
-│ Type a message... (/help for commands)             │
-└────────────────────────────────────────────────────┘
-```
+![AI Chat TUI Demo](docs/demo.gif)
 
 ### How It Works
 
