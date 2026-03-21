@@ -14,7 +14,7 @@ type Config struct {
 	APIKey  string `env:"OPENAI_API_KEY,required"`
 	Model   string `env:"AI_MODEL"   envDefault:"gpt-4o-mini"`
 	Memory  bool   `env:"AI_MEMORY"  envDefault:"true"`
-	DataDir string `env:"AI_DATA_DIR"`
+	DataDir string `env:"AI_DATA_DIR" envDefault:".ai-chat"`
 }
 
 // Load reads configuration from .env file (if present) and environment variables.
@@ -25,10 +25,6 @@ func Load() (*Config, error) {
 	cfg := &Config{}
 	if err := env.Parse(cfg); err != nil {
 		return nil, fmt.Errorf("missing config: %w", err)
-	}
-
-	if cfg.DataDir == "" {
-		cfg.DataDir = ".ai-chat"
 	}
 
 	if err := os.MkdirAll(cfg.DataDir, 0o755); err != nil {
