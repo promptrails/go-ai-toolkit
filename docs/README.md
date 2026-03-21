@@ -2,7 +2,7 @@
 
 > Production-ready AI building blocks for Go.
 
-Three packages. One toolkit. A working demo.
+Production-ready AI building blocks for Go.
 
 ## The Toolkit
 
@@ -11,6 +11,7 @@ Three packages. One toolkit. A working demo.
 | [**LangRails**](https://github.com/promptrails/langrails) | Unified LLM provider — 12 providers, streaming, tool calling, chain, graph, MCP, A2A |
 | [**GuardRails**](https://github.com/promptrails/guardrails) | Content safety — PII, toxicity, prompt injection, secrets, 14 scanners |
 | [**MemoryRails**](https://github.com/promptrails/memoryrails) | Agent memory — embeddings, vector stores, semantic search, importance decay |
+| [**MediaRails**](https://github.com/promptrails/mediarails) | AI media generation — speech, image, video, 10 providers |
 
 ## Demo App
 
