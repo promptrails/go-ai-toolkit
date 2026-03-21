@@ -1,0 +1,8 @@
+ai-chat
+.env
+dist/
+*.exe
+*.test
+*.out
+.idea/
+.vscode/
