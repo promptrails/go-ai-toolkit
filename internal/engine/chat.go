@@ -117,10 +117,11 @@ func (c *Chat) Send(ctx context.Context, userInput string) (string, error) {
 	_ = c.history.Add("user", safeInput)
 	_ = c.history.Add("assistant", safeOutput)
 
-	// MemoryRails: store conversation for future recall
+	// MemoryRails: store conversation for future recall (async, outlives request)
 	if c.memOn && c.memory != nil {
-		go func() {
-			if _, err := c.memory.Remember(context.Background(), safeInput, memoryrails.TypeConversation, nil); err != nil {
+		memInput := safeInput
+		go func() { // #nosec G118 -- intentionally detached for async memory storage
+			if _, err := c.memory.Remember(context.Background(), memInput, memoryrails.TypeConversation, nil); err != nil {
 				c.logger.Warn("failed to store memory", zap.Error(err))
 			}
 		}()
