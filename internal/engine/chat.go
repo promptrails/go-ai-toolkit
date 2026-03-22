@@ -11,7 +11,7 @@ import (
 	"github.com/promptrails/guardrails"
 	"github.com/promptrails/guardrails/scanners"
 	"github.com/promptrails/langrails"
-	"github.com/promptrails/langrails/openai"
+	"github.com/promptrails/langrails/llm"
 	"github.com/promptrails/memoryrails"
 	oaiEmbed "github.com/promptrails/memoryrails/embedders/openai"
 	"github.com/promptrails/memoryrails/stores/inmemory"
@@ -39,8 +39,11 @@ func NewChat(cfg *config.Config, db *sql.DB, logger *zap.Logger) (*Chat, error) 
 		return nil, fmt.Errorf("failed to init history: %w", err)
 	}
 
-	// LangRails: unified LLM provider
-	provider := openai.New(cfg.APIKey)
+	// LangRails: unified LLM provider (via registry)
+	provider, err := llm.New(llm.OpenAI, cfg.APIKey)
+	if err != nil {
+		return nil, fmt.Errorf("failed to init LLM provider: %w", err)
+	}
 	logger.Info("LLM provider initialized", zap.String("model", cfg.Model))
 
 	// GuardRails: content safety scanners

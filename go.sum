@@ -52,10 +52,10 @@ github.com/muesli/termenv v0.16.0 h1:S5AlUN9dENB57rsbnkPyfdGuWIlkmzJjbFf0Tf5FWUc
 github.com/muesli/termenv v0.16.0/go.mod h1:ZRfOIKPFDYQoDFF4Olj7/QJbW60Ol/kL1pU3VfY/Cnk=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/promptrails/guardrails v0.1.0 h1:+BTX/b5QjcnV/W9JnPe89zaDh5+ltj35gChoO8Pow3A=
-github.com/promptrails/guardrails v0.1.0/go.mod h1:sl9D4+SaiR5nQkCFk87WtPGNc+eu+jpbWcWHACIDZM8=
-github.com/promptrails/langrails v0.3.0 h1:vMsx5+kxnEudZg9v1rxvKVS3t9wtxeMvt2zKM1GFoUk=
-github.com/promptrails/langrails v0.3.0/go.mod h1:mfEUv1OASEMqumxqKBW2DK24+P6eFNGmsT6QaBnoJQ4=
+github.com/promptrails/guardrails v0.3.0 h1:t7PGIFXxLG6WZDMnqrHOQeZ2wAdpG6iWlzbsPtR+IcA=
+github.com/promptrails/guardrails v0.3.0/go.mod h1:sl9D4+SaiR5nQkCFk87WtPGNc+eu+jpbWcWHACIDZM8=
+github.com/promptrails/langrails v0.4.0 h1:mfWxyS89fwQIdWt0e9N9LWTicDoDN2ETHXGxw0s8mSQ=
+github.com/promptrails/langrails v0.4.0/go.mod h1:mfEUv1OASEMqumxqKBW2DK24+P6eFNGmsT6QaBnoJQ4=
 github.com/promptrails/memoryrails v0.0.0-20260321065250-22bd1d51d167 h1:TveZw9HMXGBMpzpGnjZo/IpxgT4APU2k38H78nfRRsY=
 github.com/promptrails/memoryrails v0.0.0-20260321065250-22bd1d51d167/go.mod h1:e4krpmQ2tsUTX6RznByTnxIBC5QmhfiN6bT0OXSN84U=
 github.com/rivo/uniseg v0.4.7 h1:WUdvkW8uEhrYfLC4ZzdpI2ztxP1I582+49Oc5Mq64VQ=
