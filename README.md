@@ -87,7 +87,7 @@ make run
 ```go
 import (
     "github.com/promptrails/langrails"
-    "github.com/promptrails/langrails/openai"
+    "github.com/promptrails/langrails/llm"
     "github.com/promptrails/guardrails"
     "github.com/promptrails/guardrails/scanners"
     "github.com/promptrails/memoryrails"
@@ -95,8 +95,8 @@ import (
     "github.com/promptrails/memoryrails/stores/inmemory"
 )
 
-// 1. LLM Provider
-provider := openai.New("sk-...")
+// 1. LLM Provider (via registry)
+provider, _ := llm.New(llm.OpenAI, "sk-...")
 
 // 2. Safety Guard
 guard := guardrails.New(
