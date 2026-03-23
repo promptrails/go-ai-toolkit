@@ -14,5 +14,6 @@
   - [Media Generation](media-generation.md)
   - [Custom Tools](custom-tools.md)
   - [Content Safety](content-safety.md)
+  - [Memory & RAG](memory-rag.md)
   - [Error Handling & Retry](error-handling.md)
   - [Observability](observability.md)
