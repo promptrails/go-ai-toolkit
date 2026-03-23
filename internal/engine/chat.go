@@ -12,6 +12,7 @@ import (
 	"github.com/promptrails/guardrails/scanners"
 	"github.com/promptrails/langrails"
 	"github.com/promptrails/langrails/llm"
+	"github.com/promptrails/langrails/tools"
 	"github.com/promptrails/memoryrails"
 	oaiEmbed "github.com/promptrails/memoryrails/embedders/openai"
 	"github.com/promptrails/memoryrails/stores/inmemory"
@@ -20,15 +21,16 @@ import (
 	"github.com/promptrails/go-ai-toolkit/internal/config"
 )
 
-// Chat implements Engine using LangRails + GuardRails + MemoryRails.
+// Chat implements Engine using LangRails + GuardRails + MemoryRails + MediaRails.
 type Chat struct {
-	provider langrails.Provider
-	memory   *memoryrails.Manager
-	guard    *guardrails.Guard
-	history  *History
-	logger   *zap.Logger
-	model    string
-	memOn    bool
+	provider   langrails.Provider
+	memory     *memoryrails.Manager
+	guard      *guardrails.Guard
+	history    *History
+	mediaTools *mediaToolKit
+	logger     *zap.Logger
+	model      string
+	memOn      bool
 }
 
 // NewChat creates a new chat engine from config. It initializes the LLM provider,
@@ -63,14 +65,18 @@ func NewChat(cfg *config.Config, db *sql.DB, logger *zap.Logger) (*Chat, error) 
 		logger.Info("memory initialized", zap.String("embedder", "openai"), zap.String("store", "inmemory"))
 	}
 
+	// MediaRails: media generation tools (based on available API keys)
+	mt := buildMediaTools(cfg, logger)
+
 	return &Chat{
-		provider: provider,
-		memory:   memMgr,
-		guard:    guard,
-		history:  history,
-		logger:   logger,
-		model:    cfg.Model,
-		memOn:    cfg.Memory,
+		provider:   provider,
+		memory:     memMgr,
+		guard:      guard,
+		history:    history,
+		mediaTools: mt,
+		logger:     logger,
+		model:      cfg.Model,
+		memOn:      cfg.Memory,
 	}, nil
 }
 
@@ -94,20 +100,55 @@ func (c *Chat) Send(ctx context.Context, userInput string) (string, error) {
 		return "", err
 	}
 
-	// LangRails: call LLM
+	// LangRails: call LLM (with tool calling loop if media tools available)
 	c.logger.Debug("calling LLM", zap.String("model", c.model), zap.Int("messages", len(msgs)))
-	resp, err := c.provider.Complete(ctx, &langrails.CompletionRequest{
+
+	req := &langrails.CompletionRequest{
 		Model:        c.model,
 		SystemPrompt: c.systemPrompt(),
 		Messages:     msgs,
-	})
-	if err != nil {
-		c.logger.Error("LLM call failed", zap.Error(err))
-		return "", fmt.Errorf("LLM error: %w", err)
 	}
-	c.logger.Debug("LLM response received",
-		zap.Int("prompt_tokens", resp.Usage.PromptTokens),
-		zap.Int("completion_tokens", resp.Usage.CompletionTokens))
+
+	// Add media tool definitions if available
+	if c.mediaTools != nil {
+		req.Tools = c.mediaTools.defs
+	}
+
+	var resp *langrails.CompletionResponse
+
+	if c.mediaTools != nil {
+		// Run tool calling loop — LLM may call media tools
+		loopResult, err := tools.RunLoop(ctx, c.provider, req, c.mediaTools.executor,
+			tools.WithMaxIterations(5),
+			tools.WithToolCallHook(func(call langrails.ToolCall, result string, err error) {
+				if err != nil {
+					c.logger.Warn("tool call failed", zap.String("tool", call.Name), zap.Error(err))
+				} else {
+					c.logger.Info("tool call executed", zap.String("tool", call.Name))
+				}
+			}),
+		)
+		if err != nil {
+			c.logger.Error("LLM call failed", zap.Error(err))
+			return "", fmt.Errorf("LLM error: %w", err)
+		}
+		resp = loopResult.Response
+		c.logger.Debug("LLM response received",
+			zap.Int("prompt_tokens", loopResult.TotalUsage.PromptTokens),
+			zap.Int("completion_tokens", loopResult.TotalUsage.CompletionTokens),
+			zap.Int("iterations", loopResult.Iterations))
+	} else {
+		// No tools — simple completion
+		var err error
+		resp, err = c.provider.Complete(ctx, req)
+		if err != nil {
+			c.logger.Error("LLM call failed", zap.Error(err))
+			return "", fmt.Errorf("LLM error: %w", err)
+		}
+		c.logger.Debug("LLM response received",
+			zap.Int("prompt_tokens", resp.Usage.PromptTokens),
+			zap.Int("completion_tokens", resp.Usage.CompletionTokens))
+	}
 
 	// GuardRails: scan output
 	outputResult := c.guard.Scan(ctx, resp.Content)
@@ -241,6 +282,9 @@ func (c *Chat) systemPrompt() string {
 	prompt := "You are a helpful AI assistant. Be concise and clear."
 	if c.memOn {
 		prompt += " You have access to memories from past conversations and can recall relevant context."
+	}
+	if c.mediaTools != nil {
+		prompt += " You can generate images, audio, and video using your tools when the user asks."
 	}
 	return prompt
 }

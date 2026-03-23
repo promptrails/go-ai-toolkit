@@ -11,10 +11,12 @@ import (
 
 // Config holds the application configuration from environment variables.
 type Config struct {
-	APIKey  string `env:"OPENAI_API_KEY,required"`
-	Model   string `env:"AI_MODEL"   envDefault:"gpt-4o-mini"`
-	Memory  bool   `env:"AI_MEMORY"  envDefault:"true"`
-	DataDir string `env:"AI_DATA_DIR" envDefault:".ai-chat"`
+	APIKey           string `env:"OPENAI_API_KEY,required"`
+	Model            string `env:"AI_MODEL"   envDefault:"gpt-4o-mini"`
+	Memory           bool   `env:"AI_MEMORY"  envDefault:"true"`
+	DataDir          string `env:"AI_DATA_DIR" envDefault:".ai-chat"`
+	ElevenLabsAPIKey string `env:"ELEVENLABS_API_KEY"`
+	FalAPIKey        string `env:"FAL_API_KEY"`
 }
 
 // Load reads configuration from .env file (if present) and environment variables.

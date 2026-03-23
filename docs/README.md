@@ -8,7 +8,7 @@ Production-ready AI building blocks for Go.
 
 | Package | What It Does |
 |---------|-------------|
-| [**LangRails**](https://github.com/promptrails/langrails) | Unified LLM provider — 12 providers, streaming, tool calling, chain, graph, MCP, A2A |
+| [**LangRails**](https://github.com/promptrails/langrails) | Unified LLM provider — 13 providers, streaming, tool calling, chain, graph, MCP, A2A |
 | [**GuardRails**](https://github.com/promptrails/guardrails) | Content safety — PII, toxicity, prompt injection, secrets, 14 scanners |
 | [**MemoryRails**](https://github.com/promptrails/memoryrails) | Agent memory — embeddings, vector stores, semantic search, importance decay |
 | [**MediaRails**](https://github.com/promptrails/mediarails) | AI media generation — speech, image, video, 10 providers |
@@ -17,7 +17,7 @@ Production-ready AI building blocks for Go.
 
 ![AI Chat TUI Demo](demo.gif)
 
-This repo includes a terminal chat application that demonstrates all three packages working together. See [Getting Started](getting-started.md) to try it.
+This repo includes a terminal chat application that demonstrates all four packages working together. See [Getting Started](getting-started.md) to try it.
 
 ## Quick Links
 

@@ -10,7 +10,8 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.37
 	github.com/promptrails/guardrails v0.3.0
-	github.com/promptrails/langrails v0.4.0
+	github.com/promptrails/langrails v0.5.0
+	github.com/promptrails/mediarails v0.2.0
 	github.com/promptrails/memoryrails v0.0.0-20260321065250-22bd1d51d167
 	go.uber.org/zap v1.27.1
 )

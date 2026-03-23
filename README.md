@@ -2,20 +2,20 @@
 
 Production-ready AI building blocks for Go.
 
-Three packages. One toolkit. Everything you need to build AI-powered applications in Go.
+Four packages. One toolkit. Everything you need to build AI-powered applications in Go.
 
 ## The Toolkit
 
 | Package | What It Does | |
 |---------|-------------|---|
-| [**LangRails**](https://github.com/promptrails/langrails) | Unified LLM provider — 12 providers, streaming, tool calling, chain, graph, MCP, A2A | [![Go](https://img.shields.io/github/v/tag/promptrails/langrails)](https://github.com/promptrails/langrails) |
+| [**LangRails**](https://github.com/promptrails/langrails) | Unified LLM provider — 13 providers, streaming, tool calling, chain, graph, MCP, A2A | [![Go](https://img.shields.io/github/v/tag/promptrails/langrails)](https://github.com/promptrails/langrails) |
 | [**GuardRails**](https://github.com/promptrails/guardrails) | Content safety — PII, toxicity, prompt injection, secrets, sentiment, 14 scanners | [![Go](https://img.shields.io/github/v/tag/promptrails/guardrails)](https://github.com/promptrails/guardrails) |
 | [**MemoryRails**](https://github.com/promptrails/memoryrails) | Agent memory — embeddings, vector stores, semantic search, importance decay | [![Go](https://img.shields.io/github/v/tag/promptrails/memoryrails)](https://github.com/promptrails/memoryrails) |
 | [**MediaRails**](https://github.com/promptrails/mediarails) | AI media generation — speech, image, video, 10 providers | [![Go](https://img.shields.io/github/v/tag/promptrails/mediarails)](https://github.com/promptrails/mediarails) |
 
 ## Demo: AI Chat TUI
 
-This repo includes a terminal chat application that demonstrates all three packages working together.
+This repo includes a terminal chat application that demonstrates all four packages working together.
 
 ![AI Chat TUI Demo](docs/demo.gif)
 
@@ -28,7 +28,9 @@ User Input
   │
   ├─→ MemoryRails: recall relevant memories from past conversations
   │
-  ├─→ LangRails: send to LLM with context + memory
+  ├─→ LangRails: send to LLM with context + memory + tools
+  │     │
+  │     └─→ MediaRails: generate images/audio/video (via tool calling)
   │
   ├─→ GuardRails: scan output, redact if needed
   │
@@ -67,10 +69,24 @@ make run
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `OPENAI_API_KEY` | Yes | — | OpenAI API key |
+| `OPENAI_API_KEY` | Yes | — | OpenAI API key (LLM + DALL-E image gen) |
 | `AI_MODEL` | No | `gpt-4o-mini` | Model to use |
 | `AI_MEMORY` | No | `true` | Enable semantic memory |
 | `AI_DATA_DIR` | No | `~/.ai-chat` | Data directory for SQLite |
+| `ELEVENLABS_API_KEY` | No | — | ElevenLabs key (enables text-to-speech tool) |
+| `FAL_API_KEY` | No | — | Fal AI key (enables video generation tool) |
+
+### Media Tools
+
+The chat supports AI media generation via tool calling. The LLM decides when to use these tools based on your request:
+
+| Tool | Provider | Requires | Example |
+|------|----------|----------|---------|
+| `generate_image` | OpenAI DALL-E 3 | `OPENAI_API_KEY` (always available) | "Create an image of a sunset" |
+| `text_to_speech` | ElevenLabs | `ELEVENLABS_API_KEY` | "Read this text aloud" |
+| `generate_video` | Fal AI | `FAL_API_KEY` | "Generate a video of ocean waves" |
+
+Tools are automatically registered when their API key is set. If no key is provided, the tool is simply not available.
 
 ### Commands
 
