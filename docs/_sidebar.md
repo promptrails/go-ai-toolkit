@@ -11,4 +11,7 @@
   - [Commands](commands.md)
 
 - **Guides**
+  - [Media Generation](media-generation.md)
+  - [Custom Tools](custom-tools.md)
+  - [Content Safety](content-safety.md)
   - [Observability](observability.md)
