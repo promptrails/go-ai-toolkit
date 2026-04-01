@@ -1,6 +1,6 @@
 module github.com/promptrails/go-ai-toolkit
 
-go 1.24.2
+go 1.26.0
 
 require (
 	github.com/caarlos0/env/v11 v11.4.0
@@ -9,10 +9,10 @@ require (
 	github.com/charmbracelet/lipgloss v1.1.0
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.37
-	github.com/promptrails/guardrails v0.3.0
-	github.com/promptrails/langrails v0.5.0
-	github.com/promptrails/mediarails v0.2.0
-	github.com/promptrails/memoryrails v0.0.0-20260321065250-22bd1d51d167
+	github.com/promptrails/guardrails v0.3.1
+	github.com/promptrails/langrails v0.5.1
+	github.com/promptrails/mediarails v0.2.1
+	github.com/promptrails/memoryrails v0.1.1
 	go.uber.org/zap v1.27.1
 )
 
