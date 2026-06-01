@@ -60,6 +60,8 @@ github.com/promptrails/mediarails v0.2.2 h1:2pXz4nWH8omFKrlmtyGBask+XjVPwupEypTB
 github.com/promptrails/mediarails v0.2.2/go.mod h1:m661ZGKoFr9o4tshNka0//Gs4Ef8629ccFFNSYAgVm8=
 github.com/promptrails/memoryrails v0.3.0 h1:itNp7fO0ifQbuGDE563KPaj8bJ83OQaBw7ATV32cZVk=
 github.com/promptrails/memoryrails v0.3.0/go.mod h1:GztuLTejRzKmMnZiD6/EeDVL9vuu+iMrEmyIerpL5LI=
+github.com/promptrails/modelsdotdev-go v0.2.0 h1:u21HIBlF0wCC4uTi+GMi1TCBdYPfaZOTqjPbMebdmR8=
+github.com/promptrails/modelsdotdev-go v0.2.0/go.mod h1:yEw2o2zTxkiCzecbsJPIHM4oo0TuP/rs71+KkH4oJEI=
 github.com/rivo/uniseg v0.4.7 h1:WUdvkW8uEhrYfLC4ZzdpI2ztxP1I582+49Oc5Mq64VQ=
 github.com/rivo/uniseg v0.4.7/go.mod h1:FN3SvrM+Zdj16jyLfmOkMNblXMcoc8DfTHruCPUcx88=
 github.com/stretchr/testify v1.8.1 h1:w7B6lhMri9wdJUVmEZPGGhZzrYTPvgJArz7wNPgYKsk=

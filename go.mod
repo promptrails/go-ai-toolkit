@@ -13,6 +13,7 @@ require (
 	github.com/promptrails/langrails v0.7.1
 	github.com/promptrails/mediarails v0.2.2
 	github.com/promptrails/memoryrails v0.3.0
+	github.com/promptrails/modelsdotdev-go v0.2.0
 	go.uber.org/zap v1.27.1
 )
 

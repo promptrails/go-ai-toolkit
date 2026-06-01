@@ -37,6 +37,12 @@ User Input
   └─→ MemoryRails: store conversation for future recall
 ```
 
+The header shows live **token usage and estimated cost** for the session. Per-model
+pricing is pulled from the [models.dev](https://models.dev) catalog via
+[`modelsdotdev-go`](https://github.com/promptrails/modelsdotdev-go); if pricing is
+unavailable (offline or an unknown model), token counts are still tracked and the
+cost is simply omitted.
+
 ### Try It
 
 **Via Go:**
@@ -148,6 +154,7 @@ memory.Remember(ctx, input.Content, memoryrails.TypeConversation, nil)
 | GuardRails | [promptrails.github.io/guardrails](https://promptrails.github.io/guardrails) | [pkg.go.dev](https://pkg.go.dev/github.com/promptrails/guardrails) |
 | MemoryRails | [promptrails.github.io/memoryrails](https://promptrails.github.io/memoryrails) | [pkg.go.dev](https://pkg.go.dev/github.com/promptrails/memoryrails) |
 | MediaRails | [promptrails.github.io/mediarails](https://promptrails.github.io/mediarails) | [pkg.go.dev](https://pkg.go.dev/github.com/promptrails/mediarails) |
+| models.dev | [github.com/promptrails/modelsdotdev-go](https://github.com/promptrails/modelsdotdev-go) | [pkg.go.dev](https://pkg.go.dev/github.com/promptrails/modelsdotdev-go) |
 
 ## License
 

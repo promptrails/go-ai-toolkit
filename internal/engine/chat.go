@@ -7,6 +7,7 @@ import (
 	"database/sql"
 	"fmt"
 	"strings"
+	"sync"
 
 	"github.com/promptrails/guardrails"
 	"github.com/promptrails/guardrails/scanners"
@@ -16,10 +17,15 @@ import (
 	"github.com/promptrails/memoryrails"
 	oaiEmbed "github.com/promptrails/memoryrails/embedders/openai"
 	"github.com/promptrails/memoryrails/stores/inmemory"
+	modelsdev "github.com/promptrails/modelsdotdev-go"
 	"go.uber.org/zap"
 
 	"github.com/promptrails/go-ai-toolkit/internal/config"
 )
+
+// providerID is the models.dev provider id used for pricing lookups. The chat
+// engine currently runs on OpenAI (see llm.New below).
+const providerID = "openai"
 
 // Chat implements Engine using LangRails + GuardRails + MemoryRails + MediaRails.
 type Chat struct {
@@ -31,6 +37,13 @@ type Chat struct {
 	logger     *zap.Logger
 	model      string
 	memOn      bool
+
+	// Cumulative usage + pricing (resolved once, lazily, from models.dev).
+	usageMu   sync.Mutex
+	usage     Usage
+	priceOnce sync.Once
+	inPrice   *float64 // USD per 1M input tokens
+	outPrice  *float64 // USD per 1M output tokens
 }
 
 // NewChat creates a new chat engine from config. It initializes the LLM provider,
@@ -115,6 +128,7 @@ func (c *Chat) Send(ctx context.Context, userInput string) (string, error) {
 	}
 
 	var resp *langrails.CompletionResponse
+	var promptTokens, completionTokens int
 
 	if c.mediaTools != nil {
 		// Run tool calling loop — LLM may call media tools
@@ -133,9 +147,10 @@ func (c *Chat) Send(ctx context.Context, userInput string) (string, error) {
 			return "", fmt.Errorf("LLM error: %w", err)
 		}
 		resp = loopResult.Response
+		promptTokens, completionTokens = loopResult.TotalUsage.PromptTokens, loopResult.TotalUsage.CompletionTokens
 		c.logger.Debug("LLM response received",
-			zap.Int("prompt_tokens", loopResult.TotalUsage.PromptTokens),
-			zap.Int("completion_tokens", loopResult.TotalUsage.CompletionTokens),
+			zap.Int("prompt_tokens", promptTokens),
+			zap.Int("completion_tokens", completionTokens),
 			zap.Int("iterations", loopResult.Iterations))
 	} else {
 		// No tools — simple completion
@@ -145,10 +160,13 @@ func (c *Chat) Send(ctx context.Context, userInput string) (string, error) {
 			c.logger.Error("LLM call failed", zap.Error(err))
 			return "", fmt.Errorf("LLM error: %w", err)
 		}
+		promptTokens, completionTokens = resp.Usage.PromptTokens, resp.Usage.CompletionTokens
 		c.logger.Debug("LLM response received",
-			zap.Int("prompt_tokens", resp.Usage.PromptTokens),
-			zap.Int("completion_tokens", resp.Usage.CompletionTokens))
+			zap.Int("prompt_tokens", promptTokens),
+			zap.Int("completion_tokens", completionTokens))
 	}
+
+	c.recordUsage(ctx, promptTokens, completionTokens)
 
 	// GuardRails: scan output
 	outputResult := c.guard.Scan(ctx, resp.Content)
@@ -242,6 +260,38 @@ func (c *Chat) ParseCommand(input string) Command {
 // Model returns the configured LLM model name.
 func (c *Chat) Model() string {
 	return c.model
+}
+
+// Usage returns the cumulative token usage and estimated cost for the session.
+func (c *Chat) Usage() Usage {
+	c.usageMu.Lock()
+	defer c.usageMu.Unlock()
+	return c.usage
+}
+
+// recordUsage accumulates the latest turn's tokens and, once model pricing is
+// resolved from the models.dev catalog, the running cost. Pricing is looked up
+// lazily on the first turn; if it is unavailable (offline, unknown model) the
+// token counts are still tracked and the cost is simply left unset.
+func (c *Chat) recordUsage(ctx context.Context, promptTokens, completionTokens int) {
+	c.priceOnce.Do(func() {
+		m, err := modelsdev.GetModelByID(ctx, providerID+":"+c.model)
+		if err != nil {
+			c.logger.Debug("model pricing unavailable", zap.String("model", c.model), zap.Error(err))
+			return
+		}
+		c.inPrice, c.outPrice = m.Cost.Input, m.Cost.Output
+	})
+
+	c.usageMu.Lock()
+	defer c.usageMu.Unlock()
+	c.usage.PromptTokens += promptTokens
+	c.usage.CompletionTokens += completionTokens
+	c.usage.TotalTokens += promptTokens + completionTokens
+	if c.inPrice != nil && c.outPrice != nil {
+		c.usage.Cost += float64(promptTokens)/1e6*(*c.inPrice) + float64(completionTokens)/1e6*(*c.outPrice)
+		c.usage.HasCost = true
+	}
 }
 
 // buildMessages constructs the message list from history and memory context.

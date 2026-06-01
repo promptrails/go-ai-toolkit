@@ -154,6 +154,14 @@ func (m Model) View() string {
 	title := titleStyle.Render(" AI Chat ") +
 		dimStyle.Render(fmt.Sprintf(" model:%s", m.engine.Model()))
 
+	if u := m.engine.Usage(); u.TotalTokens > 0 {
+		stat := fmt.Sprintf(" · %s tokens", formatTokens(u.TotalTokens))
+		if u.HasCost {
+			stat += fmt.Sprintf(" · $%.4f", u.Cost)
+		}
+		title += dimStyle.Render(stat)
+	}
+
 	if m.waiting {
 		title += " " + m.spinner.View() + dimStyle.Render(" thinking...")
 	}
@@ -184,6 +192,14 @@ func (m *Model) sendMessage(input string) tea.Cmd {
 		resp, err := m.engine.Send(context.Background(), input)
 		return responseMsg{content: resp, err: err}
 	}
+}
+
+// formatTokens renders a token count compactly (e.g. 1234 -> "1.2k").
+func formatTokens(n int) string {
+	if n >= 1000 {
+		return fmt.Sprintf("%.1fk", float64(n)/1000)
+	}
+	return fmt.Sprintf("%d", n)
 }
 
 func wordWrap(s string, width int) string {
