@@ -212,7 +212,7 @@ func (c *Chat) Execute(ctx context.Context, cmd Command) CommandResult {
 		var sb strings.Builder
 		sb.WriteString("Recent memories:\n")
 		for i, m := range memories {
-			sb.WriteString(fmt.Sprintf("  %d. [%s] %s\n", i+1, m.Type, truncate(m.Content, 80)))
+			fmt.Fprintf(&sb, "  %d. [%s] %s\n", i+1, m.Type, truncate(m.Content, 80))
 		}
 		return CommandResult{Response: sb.String()}
 
@@ -231,7 +231,7 @@ func (c *Chat) Execute(ctx context.Context, cmd Command) CommandResult {
 		var sb strings.Builder
 		sb.WriteString("Commands:\n")
 		for cmd, desc := range AllCommands() {
-			sb.WriteString(fmt.Sprintf("  %-10s %s\n", cmd, desc))
+			fmt.Fprintf(&sb, "  %-10s %s\n", cmd, desc)
 		}
 		return CommandResult{Response: sb.String()}
 
@@ -315,7 +315,7 @@ func (c *Chat) buildMessages(ctx context.Context, currentInput string) ([]langra
 			var memContext strings.Builder
 			memContext.WriteString("[Relevant memories from past conversations]\n")
 			for _, r := range results {
-				memContext.WriteString(fmt.Sprintf("- %s\n", r.Memory.Content))
+				fmt.Fprintf(&memContext, "- %s\n", r.Memory.Content)
 			}
 			msgs = append([]langrails.Message{
 				{Role: "user", Content: memContext.String()},
