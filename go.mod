@@ -10,7 +10,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.37
 	github.com/promptrails/guardrails v0.3.2
-	github.com/promptrails/langrails v0.7.1
+	github.com/promptrails/langrails v0.8.6
 	github.com/promptrails/mediarails v0.2.2
 	github.com/promptrails/memoryrails v0.3.0
 	github.com/promptrails/modelsdotdev-go v0.2.0
