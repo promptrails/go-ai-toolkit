@@ -10,9 +10,9 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.52
 	github.com/promptrails/guardrails v0.3.3
-	github.com/promptrails/langrails v0.9.1
+	github.com/promptrails/langrails v0.10.0
 	github.com/promptrails/mediarails v0.2.3
-	github.com/promptrails/memoryrails v0.3.1
+	github.com/promptrails/memoryrails v0.3.2
 	github.com/promptrails/modelsdotdev-go v0.2.1
 	go.uber.org/zap v1.28.0
 )
@@ -39,5 +39,5 @@ require (
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/sys v0.38.0 // indirect
-	golang.org/x/text v0.23.0 // indirect
+	golang.org/x/text v0.29.0 // indirect
 )
