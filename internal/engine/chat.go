@@ -301,7 +301,7 @@ func (c *Chat) buildMessages(ctx context.Context, currentInput string) ([]langra
 	// Load recent chat history
 	history, _ := c.history.Load(20)
 	for _, h := range history {
-		msgs = append(msgs, langrails.Message{Role: h.Role, Content: h.Content})
+		msgs = append(msgs, langrails.Message{Role: langrails.Role(h.Role), Content: h.Content})
 	}
 
 	// MemoryRails: inject relevant memories
