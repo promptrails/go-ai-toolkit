@@ -9,11 +9,11 @@ require (
 	github.com/charmbracelet/lipgloss v1.1.0
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.52
-	github.com/promptrails/guardrails v0.3.3
+	github.com/promptrails/guardrails v0.3.4
 	github.com/promptrails/langrails v1.0.2
-	github.com/promptrails/mediarails v0.2.3
-	github.com/promptrails/memoryrails v0.3.2
-	github.com/promptrails/modelsdotdev-go v0.2.1
+	github.com/promptrails/mediarails v0.2.4
+	github.com/promptrails/memoryrails v0.3.3
+	github.com/promptrails/modelsdotdev-go v0.2.2
 	go.uber.org/zap v1.28.0
 )
 
