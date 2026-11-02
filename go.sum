@@ -54,8 +54,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/promptrails/guardrails v0.3.4 h1:OH+A8pAgiHPiziK4ukUYKVX59IHuyvOFN+8gmZZKA1k=
 github.com/promptrails/guardrails v0.3.4/go.mod h1:lih+Umm17ORWNAZmrt2/FjUXIY7m3zS8AFW/TdZlFZE=
-github.com/promptrails/langrails v1.0.2 h1:ZUYGBpRi1w2kM9iuPYUa34HcLCxuYE54eunxGKtq5dg=
-github.com/promptrails/langrails v1.0.2/go.mod h1:eeDHtizFnOkoWrhc0Td9HfqPBwSXqGIECKl7T9bF56Y=
+github.com/promptrails/langrails v1.1.0 h1:OM/1CeYYY/H/swBnHB9QSoMfKZMPj7ATyWuwf3Y0XME=
+github.com/promptrails/langrails v1.1.0/go.mod h1:eeDHtizFnOkoWrhc0Td9HfqPBwSXqGIECKl7T9bF56Y=
 github.com/promptrails/mediarails v0.2.4 h1:vRKDFxjI0k8PaBORJnU5PGHPFm6H+DyeDnF1wotmLNo=
 github.com/promptrails/mediarails v0.2.4/go.mod h1:Gw7KuuD3z+1/lyx23CUcSPQliAh2tZv+WI/1rwB/kbg=
 github.com/promptrails/memoryrails v0.3.3 h1:32x56P1JZD4W4lKL9XkG+17CRddKC5dbUStWrYMdxSI=
