@@ -3,12 +3,12 @@ module github.com/promptrails/go-ai-toolkit
 go 1.27.3
 
 require (
-	github.com/caarlos0/env/v11 v11.4.1
+	github.com/caarlos0/env/v11 v11.4.2
 	github.com/charmbracelet/bubbles v1.0.0
 	github.com/charmbracelet/bubbletea v1.3.10
 	github.com/charmbracelet/lipgloss v1.1.0
 	github.com/joho/godotenv v1.5.1
-	github.com/mattn/go-sqlite3 v1.14.52
+	github.com/mattn/go-sqlite3 v1.14.53
 	github.com/promptrails/guardrails v0.3.4
 	github.com/promptrails/langrails v1.1.0
 	github.com/promptrails/mediarails v0.2.4
